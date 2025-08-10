@@ -1,0 +1,34 @@
+import mongoose from "mongoose";
+
+const questionSchema = new mongoose.Schema({
+    session:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Session',
+        
+    },
+    question: {
+        type: String,
+        required: true,
+    },
+    answer: {
+        type: String,
+        
+    },
+    category: {
+        type: String,
+        
+    },
+    isPinned :{
+        type: Boolean,
+        default: false,
+    },
+
+    note :{
+        type: String,
+        default: "",
+    }
+
+
+}, { timestamps: true });
+const Question = mongoose.model('Question', questionSchema);
+export default Question;
