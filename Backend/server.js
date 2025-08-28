@@ -34,7 +34,7 @@ connectDB();
 
 // Middleware
 app.use(cors({
-  origin: '*',
+  origin: 'https://ai-powered-interview-prep1.netlify.app/',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
