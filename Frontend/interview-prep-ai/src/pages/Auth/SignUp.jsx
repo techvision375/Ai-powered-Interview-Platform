@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Input } from "../../componants/Inputs/input";
+import { Input } from "../../componants/Inputs/Input.jsx";
 import "../../index.css";
 import { ProfilePhotoSelector } from "../../componants/Inputs/ProfilePhotoSelector";
 import { validateEmail } from "../../utils/helper";
