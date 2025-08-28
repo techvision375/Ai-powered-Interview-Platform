@@ -33,11 +33,12 @@ console.log('Gemini Key:', process.env.GEMINIAPIKEY);
 connectDB();
 
 // Middleware
-app.use(cors({
-  origin: ["https://ai-powered-interview-prep1.netlify.app",],
+app.options('*', cors({
+  origin: ["https://ai-powered-interview-prep1.netlify.app"],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 
 app.use(express.json()); // Body parser
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve static uploads
