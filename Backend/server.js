@@ -33,11 +33,8 @@ console.log('Gemini Key:', process.env.GEMINIAPIKEY);
 connectDB();
 
 // Middleware
-app.options('*', cors({
-  origin: ["https://ai-powered-interview-prep1.netlify.app"],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors({ origin: "*" }));
+
 
 
 app.use(express.json()); // Body parser
