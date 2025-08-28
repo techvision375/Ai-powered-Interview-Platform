@@ -5,7 +5,7 @@ import { APP_FEATURES } from "../../utils/data.js";
 import { LuSparkles } from "react-icons/lu";
 import Hero_Image from "../../assets/hero_image.png";
 import Login from "../Auth/Login.jsx";
-import Signup from "../Auth/Signup.jsx";
+import Signup from "../Auth/SignUp.jsx";
 import { Modal } from "../../componants/Loader/Modal.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
 import { ProfileInfoCard } from "../../componants/Cards/ProfileInfoCard.jsx";
