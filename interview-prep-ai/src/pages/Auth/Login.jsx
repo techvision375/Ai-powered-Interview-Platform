@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Input } from "../../componants/Inputs/input.jsx";
+import { Input } from "../../componants/Inputs/input.js";
 import { ProfilePhotoSelector } from "../../componants/Inputs/ProfilePhotoSelector.jsx";
 import "../../index.css";
 import { validateEmail } from "../../utils/helper.js";
