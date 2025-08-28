@@ -27,7 +27,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 // Log the Gemini API Key (just for debugging - remove in prod)
-console.log('Gemini Key:', process.env.GEMINIAPIKEY);
+console.log('Gemini Key:', process.env.GEMINI_API_KEY);
 
 // Connect to MongoDB
 connectDB();
