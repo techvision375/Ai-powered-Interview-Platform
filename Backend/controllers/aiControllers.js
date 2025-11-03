@@ -1,85 +1,46 @@
-// import { GoogleGenAI } from "@google/genai";
-// import { questionAnswerPrompt } from "../utils/promts.js";
-// console.log("Gemini Key:", process.env.GEMINIAPIKEY); 
-// const ai = new GoogleGenAI({ apiKey: process.env.GEMINIAPIKEY });
-
-// // desc     generate interview question and answers using Gemini
-// // route    POST     /api/ai/generate-question
-// // access  Private
-
-// export const generateInteviewQuestion = async (req, res) => {
-//     try {
-//         console.log("Raw body received:", req.body);
-//         const { role, experience, topicsToFocus, numberOfQuestions } = req.body;
-//         if (!role || !experience || !topicsToFocus || !numberOfQuestions) {
-//             return res.status(400).json({ message: "All fields are required" });
-//         }
-
-//         const prompt = questionAnswerPrompt(role, experience, topicsToFocus, numberOfQuestions);
-//         const response = await ai.models.generateContent({
-//             model: "gemini-2.0-flash-lite",
-//             contents: prompt,
-
-//         });
-
-//         let rawText = response.text;
-
-//         const cleanedText = rawText
-//             .replace(/^```json\s*/, "")
-//             .replace(/```$/, "")
-//             .trim();
-
-//         const data = JSON.parse(cleanedText);
-//         res.status(200).json(data);
-
-//     } catch (error) {
-//         console.error("Error in generateInterviewQuestion controllers:", error);
-//         res.status(500).json({ message: "Failed to generate questions" });
-//     }
-// };
 import dotenv from "dotenv";
 dotenv.config();
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { questionAnswerPrompt ,conceptExplainPrompt } from "../utils/promts.js";
+import { questionAnswerPrompt, conceptExplainPrompt } from "../utils/promts.js";
 
 console.log("Gemini API Key:", process.env.GEMINI_API_KEY);
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 export const generateInteviewQuestion = async (req, res) => {
-  try {
-    console.log("Raw body received:", req.body);
-    const { role, experience, topicsToFocus, numberOfQuestions } = req.body;
+    try {
+        console.log("Raw body received:", req.body);
+        const { role, experience, topicsToFocus, numberOfQuestions } = req.body;
 
-    if (!role || !experience || !topicsToFocus || !numberOfQuestions) {
-      return res.status(400).json({ message: "All fields are required" });
+        if (!role || !experience || !topicsToFocus || !numberOfQuestions) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+
+        const prompt = questionAnswerPrompt(role, experience, topicsToFocus, numberOfQuestions);
+        console.log("Generated Prompt:\n", prompt);
+
+        // ✅ Changed to the faster, modern "flash" model
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
+        const result = await model.generateContent(prompt);
+
+        const text = result.response.text();
+        console.log("Raw Gemini Output:\n", text);
+        const cleanedText = text
+            .replace(/^```json\s*/, "") // Remove starting markdown for JSON
+            .replace(/```$/, "")       // Remove ending markdown
+            .replace(/\\n/g, "")       // Remove newline characters
+            .trim();
+
+        res.status(200).json(cleanedText);
+    } catch (error) {
+        console.error("Error in generateInterviewQuestion controller:", error);
+        res.status(500).json({
+            message: "Failed to generate interview questions",
+            error: error.message,
+        });
     }
-
-    const prompt = questionAnswerPrompt(role, experience, topicsToFocus, numberOfQuestions);
-    console.log("Generated Prompt:\n", prompt);
-
-    // ✅ Changed to the faster, modern "flash" model
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-
-    const result = await model.generateContent(prompt);
-
-    const text = result.response.text();
-    console.log("Raw Gemini Output:\n", text);
-    const cleanedText = text
-    .replace(/^```json\s*/, "") // Remove starting markdown for JSON
-    .replace(/```$/, "")       // Remove ending markdown
-    .replace(/\\n/g, "")       // Remove newline characters
-    .trim(); 
-
-    res.status(200).json(cleanedText);
-  } catch (error) {
-    console.error("Error in generateInterviewQuestion controller:", error);
-    res.status(500).json({
-      message: "Failed to generate interview questions",
-      error: error.message,
-    });
-  }
 };
 
 
@@ -102,7 +63,7 @@ export const generateExplaination = async (req, res) => {
 
         console.log("Generated Prompt:\n", prompt);
 
-        
+
         const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
         // Make the API call
         const result = await model.generateContent(prompt);
@@ -111,7 +72,7 @@ export const generateExplaination = async (req, res) => {
         console.log("Raw Gemini Output:\n", rawText);
         // Clean and parse the response
         const cleanedText = rawText
-            .replace(/^```json\s*/, "") 
+            .replace(/^```json\s*/, "")
             .replace(/```$/, "")
             .replace(/\\n/g, "")
             .trim();
