@@ -121,7 +121,7 @@ const LandingPage = () => {
             </section>
           </div>
           <div className="text-sm bg-gray-50 text-secondary text-center p-5 mt-5">
-            made with ❤️ happy coding!
+          From logic to love — it’s all in the code
           </div>
         </div>
 
