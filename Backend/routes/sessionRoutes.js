@@ -14,4 +14,4 @@ router.get("/my-sessions", protect, getMySession);
 router.get("/:id", protect, getSessionById);
 router.delete("/:id", protect, deleteSession);
 
-export default router;x
+export default router;
