@@ -80,7 +80,7 @@ const Signup = ({ setCurrentPage }) => {
         join us today by entering your details below
       </p>
       <form onSubmit={handleSignup}>
-        <ProfilePhotoSelector image={profilePic} setimage={setprofilePic} />
+        {/* <ProfilePhotoSelector image={profilePic} setimage={setprofilePic} /> */}
 
         <div className="grid grid-cols-1 md:grid-cols-1 gap-2 mt-3">
           <Input

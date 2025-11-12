@@ -24,6 +24,7 @@ export const generateInteviewQuestion = async (req, res) => {
         const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
         const result = await model.generateContent(prompt);
+        console.log("Raw Gemini Output:\n", result);
 
         const text = result.response.text();
         console.log("Raw Gemini Output:\n", text);
